@@ -4,7 +4,7 @@ class m120723_112518_pagesPath extends CDbMigration
 {
 	public function up()
 	{
-        $this->addColumn("{{static_page}}", "path", "VARCHAR(16) DEFAULT NULL");
+        $this->addColumn("{{static_page}}", "path", "VARCHAR(64) DEFAULT NULL");
         $this->createIndex("static_page_path", "{{static_page}}", "path", true);
 	}
 
