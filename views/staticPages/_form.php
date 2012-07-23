@@ -1,3 +1,7 @@
+<?
+    $parents = Yii::app()->getModule("staticPages")->possibleParents($model ? $model->id : null);
+    $regions = Yii::app()->getModule("staticPages")->possibleRegions()
+?>
 <div class="form">
 
     <?php $form = $this->beginWidget('CActiveForm', array(
@@ -9,11 +13,6 @@
 
     <?php echo $form->errorSummary($model); ?>
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'parent_id'); ?>
-        <?php echo $form->textField($model, 'parent_id'); ?>
-        <?php echo $form->error($model, 'parent_id'); ?>
-    </div>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'title'); ?>
@@ -27,11 +26,29 @@
         <?php echo $form->error($model, 'content'); ?>
     </div>
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'sorting'); ?>
-        <?php echo $form->textField($model, 'sorting'); ?>
-        <?php echo $form->error($model, 'sorting'); ?>
-    </div>
+    <fieldset>
+
+        <div class="row">
+            <?php echo $form->labelEx($model, 'sorting'); ?>
+            <?php echo $form->textField($model, 'sorting'); ?>
+            <?php echo $form->error($model, 'sorting'); ?>
+        </div>
+
+        <div class="row">
+            <?php echo $form->labelEx($model, 'parent_id'); ?>
+            <?=$form->dropdownList($model, "parent_id", $parents)?>
+            <?php echo $form->error($model, 'parent_id'); ?>
+        </div>
+
+        <?if(count($regions)) {?>
+        <div class="row">
+            <?php echo $form->labelEx($model, 'region'); ?>
+            <?=$form->dropdownList($model, "region", $regions)?>
+            <?php echo $form->error($model, 'region'); ?>
+        </div>
+        <?}?>
+
+    </fieldset>
 
     <div class="row buttons">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

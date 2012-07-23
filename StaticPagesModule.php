@@ -15,6 +15,8 @@ class StaticPagesModule extends CWebModule
     public $filesDir = "assets/staticPages/files";
     public $linkFilesDir = "assets/staticPages/files";
 
+    public $regions = array();
+
     public function init()
     {
         // this method is called when the module is being created
@@ -39,5 +41,28 @@ class StaticPagesModule extends CWebModule
 
     public function model() {
         return StaticPage::model($this->modelClass);
+    }
+
+    public function possibleParents($id) {
+        $prts = array(""=>"-");
+        foreach(StaticPage::model()->findAll() as $p) {
+            if($p->id == $id) continue;
+            $prts[$p->id] = $p->title;
+        }
+        return $prts;
+    }
+
+    public function possibleRegions() {
+        if(!count($this->regions)) return $this->regions;
+        $regions = array();
+        foreach($this->regions as $k=>$v) {
+            if($k === "") {
+                $regions[$k] = $v;
+                continue;
+            }
+            if(is_array($v)) $v = $k;
+            $regions[$v] = Yii::t("app", "Region ".ucfirst($v));
+        }
+        return $regions;
     }
 }

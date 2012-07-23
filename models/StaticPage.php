@@ -21,6 +21,13 @@ class StaticPage extends BaseStaticPage
         return $relation;
     }
 
+    public function region($name)
+    {
+        $this->getDbCriteria()->order = "sorting ASC";
+        $this->getDbCriteria()->compare("region", $name);
+        return $this;
+    }
+
     public function __toString() {
         return $this->title;
     }
