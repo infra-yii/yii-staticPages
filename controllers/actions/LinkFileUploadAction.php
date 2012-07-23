@@ -1,29 +1,17 @@
 <?php
 
-class LinkFileUploadAction extends CAction{
-    
-    public function run(){
-        
-       $dir_image = "assets/wysiwyg";
-       if(!is_dir($dir_image)) {
-                mkdir($dir_image);
-       }
-       
-       
-       $file =  CUploadedFile::getInstanceByName('file');
+Yii::import("staticPages.controllers.actions.UploadAction");
 
+class LinkFileUploadAction extends UploadAction
+{
 
-                $extension = '.'.$file->getExtensionName();
+    public function run()
+    {
+        $file = CUploadedFile::getInstanceByName('file');
+        $path = $this->getUniquePath($this->filesDir(), $file->extensionName);
+        $file->saveAs($path);
 
-                while(file_exists($filename = $dir_image.'/'.uniqid().$extension));
-
-
-                $file->saveAs($filename);
-
-
-                echo  '/'.$filename;
+        echo  '/' . $path;
     }
-    
+
 }
-    
-?>

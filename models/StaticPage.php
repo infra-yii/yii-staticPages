@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('staticPages.models._base.BasePage');
+Yii::import('staticPages.models._base.BaseStaticPage');
 
 class StaticPage extends BaseStaticPage
 {

@@ -70,11 +70,11 @@ abstract class BaseStaticPage extends GxActiveRecord
     {
         return array(
             'id' => Yii::t('app', 'ID'),
-            'parent_id' => null,
+            'parent_id' => Yii::t('app', 'Parent Page'),
             'title' => Yii::t('app', 'Title'),
             'content' => Yii::t('app', 'Content'),
             'sorting' => Yii::t('app', 'Sorting'),
-            'parent' => Yii::t('app', 'Parent Page'),
+            'parent' => null,
             'pages' => null,
         );
     }

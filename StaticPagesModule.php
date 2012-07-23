@@ -11,6 +11,10 @@ class StaticPagesModule extends CWebModule
 
     public $modelClass = "StaticPage";
 
+    public $imagesDir = "assets/staticPages/images";
+    public $filesDir = "assets/staticPages/files";
+    public $linkFilesDir = "assets/staticPages/files";
+
     public function init()
     {
         // this method is called when the module is being created

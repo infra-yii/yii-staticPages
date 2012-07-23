@@ -1,4 +1,5 @@
 <?php
+$this->pageTitle = $model->title;
 if(!Yii::app()->user->isGuest) {
     $this->widget('zii.widgets.CMenu',array(
         'items'=>array(
