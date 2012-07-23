@@ -48,6 +48,12 @@
         </div>
         <?}?>
 
+        <div class="row">
+            <?php echo $form->labelEx($model, 'path'); ?>
+            <?php echo $form->textField($model, 'path'); ?>
+            <?php echo $form->error($model, 'path'); ?>
+        </div>
+
     </fieldset>
 
     <div class="row buttons">

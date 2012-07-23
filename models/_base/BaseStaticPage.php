@@ -14,6 +14,8 @@
  * @property string $title
  * @property string $content
  * @property integer $sorting
+ * @property string $region
+ * @property string $path
  *
  * @property StaticPage $parent
  * @property StaticPage[] $pages
@@ -46,10 +48,10 @@ abstract class BaseStaticPage extends GxActiveRecord
         return array(
             array('parent_id, sorting', 'numerical', 'integerOnly'=>true),
             array('title', 'length', 'max'=>255),
-            array('region', 'length', 'max'=>16),
+            array('region, path', 'length', 'max'=>16),
             array('content', 'safe'),
-            array('parent_id, title, content, sorting, region', 'default', 'setOnEmpty' => true, 'value' => null),
-            array('id, parent_id, title, content, sorting, region', 'safe', 'on'=>'search'),
+            array('parent_id, title, content, sorting, region, path', 'default', 'setOnEmpty' => true, 'value' => null),
+            array('id, parent_id, title, content, sorting, region, path', 'safe', 'on'=>'search'),
         );
     }
 
@@ -76,6 +78,7 @@ abstract class BaseStaticPage extends GxActiveRecord
             'content' => Yii::t('app', 'Content'),
             'sorting' => Yii::t('app', 'Sorting'),
             'region' => Yii::t('app', 'Region'),
+            'path' => Yii::t('app', 'Path'),
             'parent' => null,
             'pages' => null,
         );
@@ -91,6 +94,7 @@ abstract class BaseStaticPage extends GxActiveRecord
         $criteria->compare('content', $this->content, true);
         $criteria->compare('sorting', $this->sorting);
         $criteria->compare('region', $this->region, true);
+        $criteria->compare('path', $this->path, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

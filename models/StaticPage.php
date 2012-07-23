@@ -6,7 +6,7 @@ class StaticPage extends BaseStaticPage
 {
     public static function model($className = null)
     {
-        if(!$className) $className = Yii::app()->getModule("staticPages")->modelClass;
+        if (!$className) $className = Yii::app()->getModule("staticPages")->modelClass;
         return parent::model($className);
     }
 
@@ -28,15 +28,33 @@ class StaticPage extends BaseStaticPage
         return $this;
     }
 
-    public function __toString() {
+    public function findByPath($path)
+    {
+        return $this->findByAttributes(array("path" => $path));
+    }
+
+    public function __toString()
+    {
         return $this->title;
     }
 
-    public function link() {
-        return CHtml::link($this->title, array(Yii::app()->getModule("staticPages")->actionView, "id"=>$this->id));
+    public function link()
+    {
+        return CHtml::link($this->title, array(Yii::app()->getModule("staticPages")->actionView, "id" => $this->id));
     }
 
-    public function url() {
-        return CHtml::normalizeUrl(array(Yii::app()->getModule("staticPages")->actionView, "id"=>$this->id));
+    public function url($normalize = false)
+    {
+        $u = array(Yii::app()->getModule("staticPages")->actionView, "id" => $this->path ? $this->path : $this->id);
+
+        return $normalize ? CHtml::normalizeUrl($u) : $u;
+    }
+
+    public function beforeSave()
+    {
+        if(Yii::app()->getComponent("i18n2ascii")) {
+            Yii::app()->getComponent("i18n2ascii")->setPath($this, $this->title);
+        }
+        return true;
     }
 }
