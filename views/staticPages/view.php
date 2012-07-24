@@ -1,12 +1,10 @@
 <?php
 $this->pageTitle = $model->title;
 if(!Yii::app()->user->isGuest) {
-    $this->widget('zii.widgets.CMenu',array(
-        'items'=>array(
+    $this->menu = array(
             array("label"=>Yii::t("app", "Manage Page"), "url"=>array("/staticPages/staticPages/update", "id"=>$model->id)),
             array("label"=>Yii::t("app", "Create New Page"), "url"=>array("/staticPages/staticPages/create")),
-        )
-    ));
+    );
 }
 ?>
 
