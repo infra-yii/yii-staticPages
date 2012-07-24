@@ -1,6 +1,7 @@
 <?
     $parents = Yii::app()->getModule("staticPages")->possibleParents($model ? $model->id : null);
-    $regions = Yii::app()->getModule("staticPages")->possibleRegions()
+    $regions = Yii::app()->getModule("staticPages")->possibleRegions();
+    $additionalFields = Yii::app()->getModule("staticPages")->model()->additionalFields();
 ?>
 <div class="form">
 
@@ -29,12 +30,6 @@
     <fieldset>
 
         <div class="row">
-            <?php echo $form->labelEx($model, 'sorting'); ?>
-            <?php echo $form->textField($model, 'sorting'); ?>
-            <?php echo $form->error($model, 'sorting'); ?>
-        </div>
-
-        <div class="row">
             <?php echo $form->labelEx($model, 'parent_id'); ?>
             <?=$form->dropdownList($model, "parent_id", $parents)?>
             <?php echo $form->error($model, 'parent_id'); ?>
@@ -48,11 +43,13 @@
         </div>
         <?}?>
 
+        <?foreach($additionalFields as $k=>$v){?>
         <div class="row">
-            <?php echo $form->labelEx($model, 'path'); ?>
-            <?php echo $form->textField($model, 'path'); ?>
-            <?php echo $form->error($model, 'path'); ?>
+            <?php echo $form->labelEx($model, $k); ?>
+            <?php echo $form->$v($model, $k); ?>
+            <?php echo $form->error($model, $k); ?>
         </div>
+        <?}?>
 
     </fieldset>
 

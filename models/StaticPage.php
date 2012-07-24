@@ -21,11 +21,16 @@ class StaticPage extends BaseStaticPage
         return $relation;
     }
 
+    public function additionalFields()
+    {
+        return array("path" => "textField", "sorting" => "textField");
+    }
+
     public function region($name)
     {
         $this->getDbCriteria()->order = "sorting ASC";
         $this->getDbCriteria()->compare("region", $name);
-        if($this->id) {
+        if ($this->id) {
             $this->getDbCriteria()->compare("parent_id", $this->id);
         }
         return $this;
@@ -55,7 +60,7 @@ class StaticPage extends BaseStaticPage
 
     public function beforeSave()
     {
-        if(Yii::app()->getComponent("i18n2ascii")) {
+        if (Yii::app()->getComponent("i18n2ascii")) {
             Yii::app()->getComponent("i18n2ascii")->setPath($this, $this->title);
         }
         return true;
