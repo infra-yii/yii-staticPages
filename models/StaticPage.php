@@ -25,6 +25,9 @@ class StaticPage extends BaseStaticPage
     {
         $this->getDbCriteria()->order = "sorting ASC";
         $this->getDbCriteria()->compare("region", $name);
+        if($this->id) {
+            $this->getDbCriteria()->compare("parent_id", $this->id);
+        }
         return $this;
     }
 
