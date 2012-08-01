@@ -17,7 +17,7 @@ if(!Yii::app()->user->isGuest) {
 foreach ($model->pages as $page){
     $this->widget('zii.widgets.CMenu',array(
         'items'=>array(
-            array("label"=>Yii::t("app", $page->title), "url"=>$page->url()),
+            array("label"=>$page->title, "url"=>$page->url()),
         )
     ));
 }

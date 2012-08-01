@@ -61,7 +61,7 @@ class StaticPage extends BaseStaticPage
     public function beforeSave()
     {
         if (Yii::app()->getComponent("i18n2ascii")) {
-            Yii::app()->getComponent("i18n2ascii")->setPath($this, $this->title);
+            Yii::app()->getComponent("i18n2ascii")->setModelUrlAlias($this, $this->title);
         }
         return true;
     }
