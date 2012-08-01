@@ -48,7 +48,8 @@ abstract class BaseStaticPage extends GxActiveRecord
         return array(
             array('parent_id, sorting', 'numerical', 'integerOnly'=>true),
             array('title', 'length', 'max'=>255),
-            array('region, path', 'length', 'max'=>16),
+            array('region', 'length', 'max'=>16),
+            array('path', 'length', 'max'=>64),
             array('content', 'safe'),
             array('parent_id, title, content, sorting, region, path', 'default', 'setOnEmpty' => true, 'value' => null),
             array('id, parent_id, title, content, sorting, region, path', 'safe', 'on'=>'search'),
