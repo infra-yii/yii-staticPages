@@ -13,11 +13,7 @@ Installation
 
 Or, optionnaly, download and unzip it.
 
-2) Run migration script:
-
-`./yiic migrate --migrationPath=staticPages.migrations`
-
-3) Modify your `main.php` config file:
+2) Modify your `main.php` config file:
 ```
 'components' => array(
         'urlManager' => array(
@@ -37,12 +33,16 @@ And in _modules_ section:
                 "mainMenu",
                 ...
             ),
-            'view'=>'//??? whatever',
+            'view'=>'//??? whatever view',
             'modelClass'=>'StaticPage'
         ),
 ```
 
 You also may override `additionalFields()` in model class.
+
+3) Run migration script:
+
+`./yiic migrate --migrationPath=staticPages.migrations`
 
 Usage
 ======
