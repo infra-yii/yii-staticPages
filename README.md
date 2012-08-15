@@ -6,6 +6,29 @@ Yii module to create and manage simple static pages
 Installation
 ====
 
+0) Add giix dependency. You may install it from yiiframework.com, or add submodule like the following:
+
+```
+git submodule add git://github.com/alari/giix.git protected/extensions/giix
+    'import' => array(
+        #...
+        'ext.giix.components.*',
+        #...
+    ),
+    #...
+    'modules' => array(
+        #...
+        'gii' => array(
+            'class' => 'system.gii.GiiModule',
+            'generatorPaths' => array(
+                'ext.giix.generators', // giix generators
+            ),
+        ),
+        #...
+    ),
+
+```
+
 1) Add submodule:
 
 `git submodule add git://github.com/alari/yii-staticPages.git protected/modules/staticPages`
