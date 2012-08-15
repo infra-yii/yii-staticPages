@@ -35,6 +35,12 @@
             <?php echo $form->error($model, 'parent_id'); ?>
         </div>
 
+        <div class="row">
+            <?php echo $form->labelEx($model, 'in_main_menu'); ?>
+            <?=$form->checkBox($model, "in_main_menu")?>
+            <?php echo $form->error($model, 'in_main_menu'); ?>
+        </div>
+
         <?if(count($regions)) {?>
         <div class="row">
             <?php echo $form->labelEx($model, 'region'); ?>

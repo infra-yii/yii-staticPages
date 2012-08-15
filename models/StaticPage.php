@@ -36,6 +36,11 @@ class StaticPage extends BaseStaticPage
         return $this;
     }
 
+    public function mainMenu() {
+        $this->getDbCriteria()->compare("in_main_menu", 1);
+        return $this;
+    }
+
     public function findByPath($path)
     {
         return $this->findByAttributes(array("path" => $path));
@@ -48,7 +53,7 @@ class StaticPage extends BaseStaticPage
 
     public function link()
     {
-        return CHtml::link($this->title, array(Yii::app()->getModule("staticPages")->actionView, "id" => $this->id));
+        return CHtml::link($this->title, array(Yii::app()->getModule("staticPages")->actionView, "id" => $this->path ? $this->path : $this->id));
     }
 
     public function url($normalize = false)

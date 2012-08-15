@@ -19,13 +19,8 @@ class StaticPagesModule extends CWebModule
 
     public function init()
     {
-        // this method is called when the module is being created
-        // you may place code here to customize the module or the application
-
-        // import the module-level models and components
         $this->setImport(array(
             'staticPages.models.*',
-            'staticPages.components.*',
         ));
     }
 
@@ -39,35 +34,47 @@ class StaticPagesModule extends CWebModule
             return false;
     }
 
-    public function model() {
+    public function model()
+    {
         return StaticPage::model($this->modelClass);
     }
 
-    public function possibleParents($id) {
-        $prts = array(""=>"-");
-        foreach(StaticPage::model()->findAll() as $p) {
-            if($p->id == $id) continue;
+    public function possibleParents($id)
+    {
+        $prts = array("" => "-");
+        foreach (StaticPage::model()->findAll() as $p) {
+            if ($p->id == $id) continue;
             $prts[$p->id] = $p->title;
         }
         return $prts;
     }
 
-    public function possibleRegions() {
-        if(!count($this->regions)) return $this->regions;
+    public function possibleRegions()
+    {
+        if (!count($this->regions)) return $this->regions;
         $regions = array();
-        foreach($this->regions as $k=>$v) {
-            if($k === "") {
+        foreach ($this->regions as $k => $v) {
+            if ($k === "") {
                 $regions[$k] = $v;
                 continue;
             }
-            if(is_array($v)) $v = $k;
-            $regions[$v] = Yii::t("app", "Region ".ucfirst($v));
+            if (is_array($v)) $v = $k;
+            $regions[$v] = Yii::t("app", "Region " . ucfirst($v));
         }
         return $regions;
     }
 
-    public function adminGenLinks() {
-        return array(array('url' => array("/staticPages/staticPages/admin"), 'label' => Yii::t("app", "Manage Static Pages"), 'visible' => !Yii::app()->user->isGuest
-        ));
+    public function mainMenuLinks()
+    {
+        $links = array();
+        foreach (StaticPage::model()->mainMenu()->findAll() as $p) {
+            $links[] = array("label" => $p->title, "url" => array($this->actionView, "id" => $p->path ? $p->path : $p->id));
+        }
+        return $links;
+    }
+
+    public function adminGenLinks()
+    {
+        return array('url' => array("/staticPages/staticPages/admin"), 'label' => Yii::t("app", "Manage Static Pages"), 'visible' => !Yii::app()->user->isGuest);
     }
 }
