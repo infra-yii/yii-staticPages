@@ -65,4 +65,9 @@ class StaticPagesModule extends CWebModule
         }
         return $regions;
     }
+
+    public function adminGenLinks() {
+        return array(array('url' => array("/staticPages/staticPages/admin"), 'label' => Yii::t("app", "Manage Static Pages"), 'visible' => !Yii::app()->user->isGuest
+        ));
+    }
 }
