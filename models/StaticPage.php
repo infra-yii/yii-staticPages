@@ -2,8 +2,14 @@
 
 Yii::import('staticPages.models._base.BaseStaticPage');
 
+/**
+ * @property string $content
+ * @property StaticPage[] pages
+ */
 class StaticPage extends BaseStaticPage
 {
+    private $_content;
+
     public static function model($className = null)
     {
         if (!$className) $className = Yii::app()->getModule("staticPages")->modelClass;
@@ -13,6 +19,11 @@ class StaticPage extends BaseStaticPage
     public function relations()
     {
         $relation = parent::relations();
+
+        if(array_key_exists("staticPages", $relation)) {
+            $relation["pages"] = $relation["staticPages"];
+            unset($relation["staticPages"]);
+        }
 
         $relation['pages']['order'] = 'sorting ASC';
         $relation['pages'][1] = Yii::app()->getModule("staticPages")->modelClass;
@@ -36,7 +47,23 @@ class StaticPage extends BaseStaticPage
         return $this;
     }
 
-    public function mainMenu() {
+    public function getContent()
+    {
+        if (!$this->_content) {
+            $this->_content = $this->dbConnection
+                ->createCommand("SELECT content FROM {{static_page_content}} WHERE page_id=:id")
+                ->bindValue("id", $this->id)->queryScalar();
+        }
+        return $this->_content;
+    }
+
+    public function setContent($content)
+    {
+        $this->_content = $content;
+    }
+
+    public function mainMenu()
+    {
         $this->getDbCriteria()->compare("in_main_menu", 1);
         return $this;
     }
@@ -69,5 +96,31 @@ class StaticPage extends BaseStaticPage
             Yii::app()->getComponent("i18n2ascii")->setModelUrlAlias($this, $this->title);
         }
         return true;
+    }
+
+    public function afterSave()
+    {
+        $contentExists = $this->dbConnection
+            ->createCommand("SELECT COUNT(*) FROM {{static_page_content}} WHERE page_id=:id")
+            ->bindValue("id", $this->id)
+            ->queryScalar();
+        if ($contentExists) {
+            $this->dbConnection
+                ->createCommand("UPDATE {{static_page_content}} SET content=:content WHERE page_id=:id")
+                ->bindValues(array("id" => $this->id, "content" => $this->_content))
+                ->execute();
+        } else {
+            $this->dbConnection
+                ->createCommand("INSERT INTO {{static_page_content}}(page_id, content) VALUES(:id, :content)")
+                ->bindValues(array("id" => $this->id, "content" => $this->_content))
+                ->execute();
+        }
+    }
+
+    public function setAttributes($values,$safeOnly=true) {
+        parent::setAttributes($values, $safeOnly);
+        if(is_array($values) && array_key_exists("content", $values)) {
+            $this->setContent($values["content"]);
+        }
     }
 }

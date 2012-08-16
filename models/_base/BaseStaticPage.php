@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -12,7 +13,6 @@
  * @property integer $id
  * @property integer $parent_id
  * @property string $title
- * @property string $content
  * @property integer $sorting
  * @property string $region
  * @property string $path
@@ -20,6 +20,7 @@
  *
  * @property StaticPage $parent
  * @property StaticPage[] $staticPages
+ * @property StaticPageContent[] $staticPageContents
  */
 abstract class BaseStaticPage extends GxActiveRecord {
 
@@ -45,16 +46,16 @@ abstract class BaseStaticPage extends GxActiveRecord {
             array('title', 'length', 'max'=>255),
             array('region', 'length', 'max'=>16),
             array('path', 'length', 'max'=>64),
-            array('content', 'safe'),
-            array('parent_id, title, content, sorting, region, path, in_main_menu', 'default', 'setOnEmpty' => true, 'value' => null),
-            array('id, parent_id, title, content, sorting, region, path, in_main_menu', 'safe', 'on'=>'search'),
+            array('parent_id, title, sorting, region, path, in_main_menu', 'default', 'setOnEmpty' => true, 'value' => null),
+            array('id, parent_id, title, sorting, region, path, in_main_menu', 'safe', 'on'=>'search'),
         );
     }
 
     public function relations() {
         return array(
             'parent' => array(self::BELONGS_TO, 'StaticPage', 'parent_id'),
-            'pages' => array(self::HAS_MANY, 'StaticPage', 'parent_id'),
+            'staticPages' => array(self::HAS_MANY, 'StaticPage', 'parent_id'),
+            'staticPageContents' => array(self::HAS_MANY, 'StaticPageContent', 'page_id'),
         );
     }
 
@@ -66,15 +67,15 @@ abstract class BaseStaticPage extends GxActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => Yii::t('app', 'ID'),
-            'parent_id' => Yii::t('app', 'Parent'),
+            'parent_id' => null,
             'title' => Yii::t('app', 'Title'),
-            'content' => Yii::t('app', 'Content'),
             'sorting' => Yii::t('app', 'Sorting'),
             'region' => Yii::t('app', 'Region'),
             'path' => Yii::t('app', 'Path'),
             'in_main_menu' => Yii::t('app', 'In Main Menu'),
             'parent' => null,
             'staticPages' => null,
+            'staticPageContents' => null,
         );
     }
 
@@ -84,7 +85,6 @@ abstract class BaseStaticPage extends GxActiveRecord {
         $criteria->compare('id', $this->id);
         $criteria->compare('parent_id', $this->parent_id);
         $criteria->compare('title', $this->title, true);
-        $criteria->compare('content', $this->content, true);
         $criteria->compare('sorting', $this->sorting);
         $criteria->compare('region', $this->region, true);
         $criteria->compare('path', $this->path, true);
