@@ -34,11 +34,20 @@ class StaticPagesModule extends CWebModule
             return false;
     }
 
+    /**
+     * Returns model class object
+     * @return StaticPage
+     */
     public function model()
     {
         return StaticPage::model($this->modelClass);
     }
 
+    /**
+     * Returns possible parent pages for a page
+     * @param $id
+     * @return array
+     */
     public function possibleParents($id)
     {
         $prts = array("" => "-");
@@ -49,6 +58,9 @@ class StaticPagesModule extends CWebModule
         return $prts;
     }
 
+    /**
+     * @return array possible regions to place a page to
+     */
     public function possibleRegions()
     {
         if (!count($this->regions)) return $this->regions;
@@ -64,6 +76,9 @@ class StaticPagesModule extends CWebModule
         return $regions;
     }
 
+    /**
+     * @return array CMenu-prepared links array
+     */
     public function mainMenuLinks()
     {
         $links = array();
@@ -73,6 +88,9 @@ class StaticPagesModule extends CWebModule
         return $links;
     }
 
+    /**
+     * @return array AdminGenModule integration
+     */
     public function adminGenLinks()
     {
         return array('url' => array("/staticPages/staticPages/admin"), 'label' => Yii::t("app", "Manage Static Pages"), 'visible' => !Yii::app()->user->isGuest);

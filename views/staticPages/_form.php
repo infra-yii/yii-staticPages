@@ -1,13 +1,29 @@
 <?
-    $parents = Yii::app()->getModule("staticPages")->possibleParents($model ? $model->id : null);
-    $regions = Yii::app()->getModule("staticPages")->possibleRegions();
-    $additionalFields = Yii::app()->getModule("staticPages")->model()->additionalFields();
+/* @var $this CController */
+/* @var $module StaticPagesModule */
+/* @var $model StaticPage */
+$module = Yii::app()->getModule("staticPages");
+$parents = $module->possibleParents($model ? $model->id : null);
+$regions = $module->possibleRegions();
+$additionalFields = $module->model()->additionalFields();
+$formInjection = $module->model()->formInjection();
+// images holder integration
+$modelRefl = new ReflectionClass($model);
+$imageHolders = array();
+if($modelRefl->implementsInterface("ImagesHolderModel")) {
+    foreach($model->imageHolders() as $h=>$t) {
+        $h = str_replace(" ", "", ucwords(str_replace("_", " ", substr($h, 0, -3))));
+        $h[0] = strtolower($h[0]);
+        $imageHolders[$h] = $t;
+    }
+}
 ?>
 <div class="form">
 
     <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'page-form',
     'enableAjaxValidation' => false,
+    'htmlOptions' => array('enctype' => 'multipart/form-data'),
 )); ?>
 
     <p class="note">Fields with <span class="required">*</span> are required.</p>
@@ -41,23 +57,35 @@
             <?php echo $form->error($model, 'in_main_menu'); ?>
         </div>
 
-        <?if(count($regions)) {?>
+        <?if (count($regions)) { ?>
         <div class="row">
             <?php echo $form->labelEx($model, 'region'); ?>
             <?=$form->dropdownList($model, "region", $regions)?>
             <?php echo $form->error($model, 'region'); ?>
         </div>
-        <?}?>
+        <? }?>
 
-        <?foreach($additionalFields as $k=>$v){?>
+        <?foreach ($additionalFields as $k => $v) { ?>
         <div class="row">
             <?php echo $form->labelEx($model, $k); ?>
             <?php echo $form->$v($model, $k); ?>
             <?php echo $form->error($model, $k); ?>
         </div>
-        <?}?>
+        <? }?>
 
     </fieldset>
+
+    <?if ($formInjection) { ?>
+    <fieldset>
+        <?$this->renderPartial($formInjection, array("model" => $model))?>
+    </fieldset>
+    <? }?>
+
+    <?if(count($imageHolders)){?>
+    <fieldset>
+        <?foreach($imageHolders as $field=>$type) $this->widget("imagesHolder.widgets.heldImages.EditImages", array("holder"=>(($model && $model->$field) ? $model->$field : $type))) ?>
+    </fieldset>
+    <?}?>
 
     <div class="row buttons">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
