@@ -132,6 +132,7 @@ class StaticPage extends BaseStaticPage
 
     public function afterSave()
     {
+        parent::afterSave();
         $contentExists = $this->dbConnection
             ->createCommand("SELECT COUNT(*) FROM {{static_page_content}} WHERE page_id=:id")
             ->bindValue("id", $this->id)
