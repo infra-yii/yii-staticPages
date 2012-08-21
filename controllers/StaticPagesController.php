@@ -158,9 +158,9 @@ class StaticPagesController extends Controller
 	public function loadModel($id)
 	{
         if(is_numeric($id)) {
-            $model= $this->getStaticPagesModule()->model()->findByPk($id);
+            $model= StaticPage::model()->findByPk($id);
         } else {
-            $model= $this->getStaticPagesModule()->model()->findByPath($id);
+            $model= StaticPage::model()->findByPath($id);
         }
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');

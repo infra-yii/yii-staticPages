@@ -35,15 +35,6 @@ class StaticPagesModule extends CWebModule
     }
 
     /**
-     * Returns model class object
-     * @return StaticPage
-     */
-    public function model()
-    {
-        return StaticPage::model($this->modelClass);
-    }
-
-    /**
      * Returns possible parent pages for a page
      * @param $id
      * @return array

@@ -8,8 +8,11 @@ Installation
 
 0) Add giix dependency. You may install it from yiiframework.com, or add submodule like the following:
 
-```
-git submodule add git://github.com/alari/giix.git protected/extensions/giix
+`git submodule add git://github.com/alari/giix.git protected/extensions/giix`
+
+
+```php
+<?
     'import' => array(
         #...
         'ext.giix.components.*',
@@ -29,15 +32,18 @@ git submodule add git://github.com/alari/giix.git protected/extensions/giix
 
 ```
 
-1) Add submodule:
+1) Add static pages submodule:
 
-`git submodule add git://github.com/alari/yii-staticPages.git protected/modules/staticPages`
-`git submodule update`
+```bash
+git submodule add git://github.com/alari/yii-staticPages.git protected/modules/staticPages
+git submodule update
+```
 
 Or, optionnaly, download and unzip it.
 
 2) Modify your `main.php` config file:
-```
+```php
+<?
 'components' => array(
         'urlManager' => array(
             'urlFormat' => 'path',
@@ -49,7 +55,8 @@ Or, optionnaly, download and unzip it.
 
 And in _modules_ section:
 
-```
+```php
+<?
         'staticPages' => array(
             "regions"=>array(
                 ""=>"-",

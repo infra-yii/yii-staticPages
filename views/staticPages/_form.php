@@ -5,8 +5,8 @@
 $module = Yii::app()->getModule("staticPages");
 $parents = $module->possibleParents($model ? $model->id : null);
 $regions = $module->possibleRegions();
-$additionalFields = $module->model()->additionalFields();
-$formInjection = $module->model()->formInjection();
+$additionalFields = StaticPage::model()->additionalFields();
+$formInjection = StaticPage::model()->formInjection();
 // images holder integration
 $modelRefl = new ReflectionClass($model);
 $imageHolders = array();
