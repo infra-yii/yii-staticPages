@@ -6,7 +6,7 @@ Yii::import('staticPages.models._base.BaseStaticPage');
  * @property string $content
  * @property StaticPage[] pages
  */
-class StaticPage extends BaseStaticPage
+class StaticPage extends BaseStaticPage implements IFormAdditionalFields
 {
     private $_content;
 
@@ -38,15 +38,6 @@ class StaticPage extends BaseStaticPage
     public function additionalFields()
     {
         return array("path" => "textField", "sorting" => "textField");
-    }
-
-    /**
-     * A view (or partial template) to be injected into a page form view
-     * @return string
-     */
-    public function formInjection()
-    {
-        return null;
     }
 
     /**
@@ -156,5 +147,11 @@ class StaticPage extends BaseStaticPage
         if (is_array($values) && array_key_exists("content", $values)) {
             $this->setContent($values["content"]);
         }
+    }
+
+    public function behaviors() {
+        $behaviors = parent::behaviors();
+        $behaviors["additionalFields"] = array("class" => "ext.shared-core.form.FormAdditionalFieldsBehavior");
+        return $behaviors;
     }
 }

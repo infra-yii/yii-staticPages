@@ -6,8 +6,6 @@
 $module = Yii::app()->getModule("staticPages");
 $parents = $module->possibleParents($model ? $model->id : null);
 $regions = $module->possibleRegions();
-$additionalFields = StaticPage::model()->additionalFields();
-$formInjection = StaticPage::model()->formInjection();
 ?>
 <div class="form">
 
@@ -57,21 +55,7 @@ $formInjection = StaticPage::model()->formInjection();
         </div>
         <? }?>
 
-        <?foreach ($additionalFields as $k => $v) { ?>
-        <div class="row">
-            <?php echo $form->labelEx($model, $k); ?>
-            <?php echo $form->$v($model, $k); ?>
-            <?php echo $form->error($model, $k); ?>
-        </div>
-        <? }?>
-
     </fieldset>
-
-    <?if ($formInjection) { ?>
-    <fieldset>
-        <?$this->renderPartial($formInjection, array("model" => $model))?>
-    </fieldset>
-    <? }?>
 
     <?$form->inject()?>
 
