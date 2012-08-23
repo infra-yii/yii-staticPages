@@ -2,25 +2,15 @@
 /* @var $this CController */
 /* @var $module StaticPagesModule */
 /* @var $model StaticPage */
+/** @var $form ExtForm */
 $module = Yii::app()->getModule("staticPages");
 $parents = $module->possibleParents($model ? $model->id : null);
 $regions = $module->possibleRegions();
-$additionalFields = StaticPage::model()->additionalFields();
-$formInjection = StaticPage::model()->formInjection();
-// images holder integration
-$modelRefl = new ReflectionClass($model);
-$imageHolders = array();
-if($modelRefl->implementsInterface("ImagesHolderModel")) {
-    foreach($model->imageHolders() as $h=>$t) {
-        $h = str_replace(" ", "", ucwords(str_replace("_", " ", substr($h, 0, -3))));
-        $h[0] = strtolower($h[0]);
-        $imageHolders[$h] = $t;
-    }
-}
 ?>
 <div class="form">
 
-    <?php $form = $this->beginWidget('CActiveForm', array(
+    <?php $form = $this->beginWidget('ext.shared-core.widgets.ExtForm', array(
+    'model'=>$model,
     'id' => 'page-form',
     'enableAjaxValidation' => false,
     'htmlOptions' => array('enctype' => 'multipart/form-data'),
@@ -65,27 +55,9 @@ if($modelRefl->implementsInterface("ImagesHolderModel")) {
         </div>
         <? }?>
 
-        <?foreach ($additionalFields as $k => $v) { ?>
-        <div class="row">
-            <?php echo $form->labelEx($model, $k); ?>
-            <?php echo $form->$v($model, $k); ?>
-            <?php echo $form->error($model, $k); ?>
-        </div>
-        <? }?>
-
     </fieldset>
 
-    <?if ($formInjection) { ?>
-    <fieldset>
-        <?$this->renderPartial($formInjection, array("model" => $model))?>
-    </fieldset>
-    <? }?>
-
-    <?if(count($imageHolders)){?>
-    <fieldset>
-        <?foreach($imageHolders as $field=>$type) $this->widget("imagesHolder.widgets.heldImages.EditImages", array("holder"=>(($model && $model->$field) ? $model->$field : $type))) ?>
-    </fieldset>
-    <?}?>
+    <?$form->inject()?>
 
     <div class="row buttons">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
