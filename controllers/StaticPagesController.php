@@ -62,7 +62,11 @@ class StaticPagesController extends Controller
 	public function actionCreate()
 	{
         $c = $this->getModelClass();
+        /* @var $model StaticPage */
 		$model=new $c;
+        if(isset($_GET['region'])) {
+            $model->region = $_GET['region'];
+        }
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);

@@ -84,6 +84,13 @@ class StaticPagesModule extends CWebModule
      */
     public function adminGenLinks()
     {
-        return array('url' => array("/staticPages/staticPages/admin"), 'label' => Yii::t("app", "Manage Static Pages"), 'visible' => !Yii::app()->user->isGuest);
+        return array(
+            'label'=>Yii::t('app', "Static Pages"),
+            'url'=>'#',
+            'items'=>array(
+                array('url' => array("/staticPages/staticPages/admin"), 'label' => Yii::t("app", "Manage Static Pages")),
+                array('url' => array("/staticPages/staticPages/create"), 'label' => Yii::t("app", "Create Page")),
+            )
+        );
     }
 }
