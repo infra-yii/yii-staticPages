@@ -149,7 +149,8 @@ class StaticPage extends BaseStaticPage implements IFormAdditionalFields
         }
     }
 
-    public function behaviors() {
+    public function behaviors()
+    {
         $behaviors = parent::behaviors();
         $behaviors["additionalFields"] = array("class" => "ext.shared-core.form.FormAdditionalFieldsBehavior");
         return $behaviors;

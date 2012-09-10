@@ -1,9 +1,9 @@
 <?php
 $this->pageTitle = $model->title;
-if(!Yii::app()->user->isGuest) {
+if (!Yii::app()->user->isGuest) {
     $this->menu = array(
-            array("label"=>Yii::t("app", "Manage Page"), "url"=>array("/staticPages/staticPages/update", "id"=>$model->id)),
-            array("label"=>Yii::t("app", "Create New Page"), "url"=>array("/staticPages/staticPages/create")),
+        array("label" => Yii::t("app", "Manage Page"), "url" => array("/staticPages/staticPages/update", "id" => $model->id)),
+        array("label" => Yii::t("app", "Create New Page"), "url" => array("/staticPages/staticPages/create")),
     );
 }
 ?>
@@ -11,13 +11,13 @@ if(!Yii::app()->user->isGuest) {
 <h1><?=$model->title?></h1>
 
 
-<?=$model->content?>
+<?= $model->content ?>
 
 <?php
-foreach ($model->pages as $page){
-    $this->widget('zii.widgets.CMenu',array(
-        'items'=>array(
-            array("label"=>$page->title, "url"=>$page->url()),
+foreach ($model->pages as $page) {
+    $this->widget('zii.widgets.CMenu', array(
+        'items' => array(
+            array("label" => $page->title, "url" => $page->url()),
         )
     ));
 }

@@ -11,7 +11,7 @@ class LinkFileUploadAction extends UploadAction
         $path = $this->getUniquePath($this->filesDir(), $file->extensionName);
         $file->saveAs($path);
 
-        echo  '/' . $path;
+        echo  "http://" . $_SERVER["HTTP_HOST"] . '/' . $path;
     }
 
 }

@@ -15,14 +15,14 @@ class RedactorUploadController extends Controller
     {
         return array(
             // upload images for wysiwyg
-            'imageUpload'=>array(
-                'class'=>'staticPages.controllers.actions.ImageUploadAction',
+            'imageUpload' => array(
+                'class' => 'staticPages.controllers.actions.ImageUploadAction',
             ),
-            'fileUpload'=>array(
-                'class'=>'staticPages.controllers.actions.FileUploadAction',
+            'fileUpload' => array(
+                'class' => 'staticPages.controllers.actions.FileUploadAction',
             ),
-            'linkFileUpload'=>array(
-                'class'=>'staticPages.controllers.actions.LinkFileUploadAction',
+            'linkFileUpload' => array(
+                'class' => 'staticPages.controllers.actions.LinkFileUploadAction',
             ),
         );
     }

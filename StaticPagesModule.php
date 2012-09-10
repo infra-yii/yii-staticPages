@@ -17,6 +17,8 @@ class StaticPagesModule extends CWebModule
 
     public $regions = array();
 
+    public $uploadedImageSize = "400x400";
+
     public function init()
     {
         $this->setImport(array(
@@ -85,9 +87,9 @@ class StaticPagesModule extends CWebModule
     public function adminGenLinks()
     {
         return array(
-            'label'=>Yii::t('app', "Static Pages"),
-            'url'=>'#',
-            'items'=>array(
+            'label' => Yii::t('app', "Static Pages"),
+            'url' => '#',
+            'items' => array(
                 array('url' => array("/staticPages/staticPages/admin"), 'label' => Yii::t("app", "Manage Static Pages")),
                 array('url' => array("/staticPages/staticPages/create"), 'label' => Yii::t("app", "Create Page")),
             )

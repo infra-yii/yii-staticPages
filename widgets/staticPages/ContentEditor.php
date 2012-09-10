@@ -5,7 +5,8 @@
  */
 class ContentEditor extends CInputWidget
 {
-    public function run() {
+    public function run()
+    {
         $module = Yii::app()->getModule("staticPages");
         $this->widget("staticPages.widgets.redactorjs.Redactor",
             array("model" => $this->model,

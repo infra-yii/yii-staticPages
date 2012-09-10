@@ -10,7 +10,7 @@ $regions = $module->possibleRegions();
 <div class="form">
 
     <?php $form = $this->beginWidget('ext.shared-core.widgets.ExtForm', array(
-    'model'=>$model,
+    'model' => $model,
     'id' => 'page-form',
     'enableAjaxValidation' => false,
     'htmlOptions' => array('enctype' => 'multipart/form-data'),

@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -22,36 +21,43 @@
  * @property StaticPage[] $staticPages
  * @property StaticPageContent[] $staticPageContents
  */
-abstract class BaseStaticPage extends GxActiveRecord {
+abstract class BaseStaticPage extends GxActiveRecord
+{
 
-    public static function model($className=__CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
-    public function tableName() {
+    public function tableName()
+    {
         return '{{static_page}}';
     }
 
-    public static function label($n = 1) {
+    public static function label($n = 1)
+    {
         return Yii::t('app', 'StaticPage|StaticPages', $n);
     }
 
-    public static function representingColumn() {
+    public static function representingColumn()
+    {
         return 'title';
     }
 
-    public function rules() {
+    public function rules()
+    {
         return array(
-            array('parent_id, sorting, in_main_menu', 'numerical', 'integerOnly'=>true),
-            array('title', 'length', 'max'=>255),
-            array('region', 'length', 'max'=>16),
-            array('path', 'length', 'max'=>64),
+            array('parent_id, sorting, in_main_menu', 'numerical', 'integerOnly' => true),
+            array('title', 'length', 'max' => 255),
+            array('region', 'length', 'max' => 16),
+            array('path', 'length', 'max' => 64),
             array('parent_id, title, sorting, region, path, in_main_menu', 'default', 'setOnEmpty' => true, 'value' => null),
-            array('id, parent_id, title, sorting, region, path, in_main_menu', 'safe', 'on'=>'search'),
+            array('id, parent_id, title, sorting, region, path, in_main_menu', 'safe', 'on' => 'search'),
         );
     }
 
-    public function relations() {
+    public function relations()
+    {
         return array(
             'parent' => array(self::BELONGS_TO, 'StaticPage', 'parent_id'),
             'staticPages' => array(self::HAS_MANY, 'StaticPage', 'parent_id'),
@@ -59,12 +65,14 @@ abstract class BaseStaticPage extends GxActiveRecord {
         );
     }
 
-    public function pivotModels() {
+    public function pivotModels()
+    {
         return array(
         );
     }
 
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'id' => Yii::t('app', 'ID'),
             'parent_id' => null,
@@ -79,7 +87,8 @@ abstract class BaseStaticPage extends GxActiveRecord {
         );
     }
 
-    public function search() {
+    public function search()
+    {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
