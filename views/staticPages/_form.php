@@ -29,7 +29,7 @@ $regions = $module->possibleRegions();
 
     <div class="row">
         <?php echo $form->labelEx($model, 'content'); ?>
-        <?$this->widget("staticPages.widgets.staticPages.ContentEditor", array("model" => $model))?>
+        <?$form->wysiwyg($model, 'content')?>
         <?php echo $form->error($model, 'content'); ?>
     </div>
 
