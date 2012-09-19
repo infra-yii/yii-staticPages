@@ -19,6 +19,8 @@ class StaticPagesModule extends CWebModule
 
     public $uploadImageSize = "400x400";
 
+    public $adminGenOverride = array("index");
+
     public function init()
     {
         $this->setImport(array(
