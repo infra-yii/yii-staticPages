@@ -17,7 +17,7 @@ class StaticPagesModule extends CWebModule
 
     public $regions = array();
 
-    public  $uploadedImageSize = "400x400";
+    public $uploadImageSize = "400x400";
 
     public function init()
     {
