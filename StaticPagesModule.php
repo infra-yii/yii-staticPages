@@ -4,6 +4,9 @@ class StaticPagesModule extends CWebModule
 {
     public $actionView = "/staticPages/staticPages/view";
     public $view = "view";
+    public $createView = "create";
+    public $updateView = "update";
+
 
     public $actionImageUpload = "/staticPages/redactorUpload/imageUpload";
     public $actionFileUpload = "/staticPages/redactorUpload/fileUpload";
