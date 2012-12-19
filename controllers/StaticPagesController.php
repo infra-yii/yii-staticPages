@@ -77,7 +77,7 @@ class StaticPagesController extends Controller
                 $this->redirect(array($this->getStaticPagesModule()->actionView, 'id' => $model->id));
         }
 
-        $this->render('create', array(
+        $this->render($this->getStaticPagesModule()->createView, array(
             'model' => $model,
         ));
     }
@@ -100,7 +100,7 @@ class StaticPagesController extends Controller
                 $this->redirect(array($this->getStaticPagesModule()->actionView, 'id' => $model->id));
         }
 
-        $this->render('update', array(
+        $this->render($this->getStaticPagesModule()->updateView, array(
             'model' => $model,
         ));
     }
