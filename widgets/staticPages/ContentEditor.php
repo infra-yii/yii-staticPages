@@ -10,7 +10,7 @@ class ContentEditor extends CInputWidget
         $module = Yii::app()->getModule("staticPages");
         $this->widget("staticPages.widgets.redactorjs.Redactor",
             array("model" => $this->model,
-                'attribute' => $this->attribute?:'content',
+                'attribute' => $this->attribute? $this->attribute :'content',
                 'editorOptions' => array(
                     'imageUpload' => $module->actionImageUpload,
                     'fileUpload' => $module->actionFileUpload,
